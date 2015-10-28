@@ -1,0 +1,18 @@
+<template>
+	<section class="au-animate">
+		<h2>${heading}</h2>
+		<form role="form" submit.delegate="submitEntry()">
+			<div class="form-group">
+				<label for="group"> Group: </label>
+				<input type="text" value.bind="group" class="form-control" id="grp" placeholder="group name"
+			</div>
+			<div class="form-group">
+				<label for="cost"> Amount: </label>
+				<input type="text" value.bind="cost" class="form-control" id="amt" placeholder="$ Money"
+			</div>
+			
+			<button type="submit" class="btn btn-default"> Submit </button>
+			
+		</form>
+	</section>
+</template>
