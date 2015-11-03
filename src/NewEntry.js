@@ -7,12 +7,15 @@ export class NewEntry {
 	heading = "New Entry";
 	cost=0;
 	
-	resKeys;
+	//BaseURL = 'http://jsonplaceholder.typicode.com';
+	BaseURL = 'https://secure.splitwise.com/api/v3.0';
+	resKey = {};
+	resultText = 'Yet to get the result';
 	constructor(http) {
 		this.client1 = new HttpClient()
 		.configure(x => {
-			x.withBaseUrl('https://secure.splitwise.com/api/v3.0/')
-			x.withHeader('Authorization', 'oauth_callback=oob; oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt; oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg; oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D; oauth_signature_method=HMAC-SHA1; oauth_timestamp=1324583039; oauth_version=1.0;')
+			x.withBaseUrl(this.BaseURL);
+			/*x.withHeader('Authorization', 'oauth_callback=oob; oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt; oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg; oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D; oauth_signature_method=HMAC-SHA1; oauth_timestamp=1324583039; oauth_version=1.0;')*/
 		})
 		// http.configure(config => {
 		// 	config
@@ -35,9 +38,10 @@ export class NewEntry {
 	}
 
 	submitEntry() {
-		return this.client1.post('get_request_token').then(
+		return this.client1.get(this.BaseURL + '/test').then(
 		response => {
-			this.resKey = response;
+			this.resultText = response.response.request_url;
+			console.log('Got the response, hurrah...' + response.response.request_url);
 		}
 		, err => {
 			console.log("error occured while sending dodebentain tontabentain: " + err);
