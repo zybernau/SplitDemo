@@ -1,5 +1,6 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
+import $ from 'jquery';
 //import 'fetch';
 
 @inject(HttpClient)
@@ -9,7 +10,9 @@ export class NewEntry {
 	
 	//BaseURL = 'http://jsonplaceholder.typicode.com';
 	//BaseURL = 'https://secure.splitwise.com/api/v3.0/test?oauth_callback=oob&oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt&oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg&oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp='+Date.now().toString()+'&oauth_version=1.0';
-	BaseURL = 'https://secure.splitwise.com/api/v3.0/get_request_token?oauth_callback=oob&oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt&oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg&oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp='+Date.now().toString()+'&oauth_version=1.0';
+	//BaseURL = 'https://secure.splitwise.com/api/v3.0/get_request_token?oauth_callback=oob&oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt&oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg&oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp='+Date.now().toString()+'&oauth_version=1.0';
+	
+	BaseURL = "http://localhost:3000/sample"
 	//timeStamp = Date.now().toString();
 	//BaseURL = 'http://term.ie/oauth/example/request_token.php?oauth_version=1.0&oauth_nonce=2c08b15e169dd79f1b58b111895710ef&oauth_timestamp='+Date.now().toString()+'&oauth_consumer_key=key&oauth_signature_method=HMAC-SHA1&oauth_signature=/R3UO7ZeIyP4C47gVfpxU0p7EUY=';
 	//Working ->
@@ -21,10 +24,11 @@ export class NewEntry {
 		this.http = http
 		.configure(x => {
 			x.withBaseUrl(this.BaseURL);
-			x.withInterceptor(new ResponseInterceptor());
+			//x.withInterceptor(new ResponseInterceptor());
+			//x.withHeader('Content-Type', 'application/json');
+			//x.withHeader('DataType' , 'jsonp');
 			//x.withHeader('Authorization', 'bearer oauth_callback=oob; oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt; oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg; oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D; oauth_signature_method=HMAC-SHA1; oauth_timestamp=1324583039; oauth_version=1.0;')
-			//x.withHeader('Content-type', 'application/json')
-			//x.withHeader('DataType' , 'jsonp')
+			
 			//x.withHeader('Method', 'post');
 		})
 		// http.configure(config => {
@@ -48,14 +52,21 @@ export class NewEntry {
 	}
 
 	submitEntry() {
-		return this.http.jsonp(this.baseURL).then(
+		return this.http.jsonp('', 'callback').then(
 		response => {
 			//this.resultText = response.response.request_url;
-			console.log('Got the response, hurrah...' + response );
+			console.log('Got the response, hurrah...' + response.response.test );
 		}
 		, err => {
 			console.log("error occured while sending dodebentain tontabentain: " + err);
 		});
+		
+		/*$.ajax({
+  type: "GET",
+  url: 'http://localhost:3000/sample',
+  success: this.success,
+  dataType: 'jsonp'
+});*/
 		
 		
 		// .then(success);
