@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var request = require('request');
 var qs = require('querystring');
+var conf = require('config.json');
 
 
 var CONSUMER_KEY = '7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt';
@@ -63,6 +64,7 @@ app.get('/init', function (req, res) {
 });
 
 app.get('/accesstoken', function (req, res) {
+    
   res.header('Content-type','application/json');
   res.header('Charset','utf8');
   console.log(" request query : " + req.query.oauth_verifier); 

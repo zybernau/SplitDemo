@@ -1,0 +1,58 @@
+0 info it worked if it ends with ok
+1 verbose cli [ 'C:\\Program Files\\nodejs\\node.exe',
+1 verbose cli   'C:\\Users\\rxm8076\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js',
+1 verbose cli   'install',
+1 verbose cli   'config.json' ]
+2 info using npm@3.3.8
+3 info using node@v4.2.1
+4 silly loadCurrentTree Starting
+5 silly install loadCurrentTree
+6 silly install readLocalPackageData
+7 silly fetchPackageMetaData config.json
+8 silly fetchOtherPackageData config.json
+9 silly cache add args [ 'config.json', null ]
+10 verbose cache add spec config.json
+11 silly cache add parsed spec Result {
+11 silly cache add   raw: 'config.json',
+11 silly cache add   scope: null,
+11 silly cache add   name: null,
+11 silly cache add   rawSpec: 'config.json',
+11 silly cache add   spec: 'c:\\Raja\\04-Code\\AureliaApps\\SplitDemo\\skeleton-navigation-0.19.0\\Server\\config.json',
+11 silly cache add   type: 'local' }
+12 silly addLocalTarball shasum (computed) 53a53fd1fef6dd844c3867f407a1e7793e67f96a
+13 verbose addTmpTarball c:\Raja\04-Code\AureliaApps\SplitDemo\skeleton-navigation-0.19.0\Server\config.json not in flight; adding
+14 verbose addTmpTarball validating metadata from c:\Raja\04-Code\AureliaApps\SplitDemo\skeleton-navigation-0.19.0\Server\config.json
+15 verbose tar unpack c:\Raja\04-Code\AureliaApps\SplitDemo\skeleton-navigation-0.19.0\Server\config.json
+16 verbose tar unpacking to C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508
+17 silly gentlyRm C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508 is being purged
+18 verbose gentlyRm don't care about contents; nuking C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508
+19 silly gunzTarPerm modes [ '777', '666' ]
+20 error not a package c:\Raja\04-Code\AureliaApps\SplitDemo\skeleton-navigation-0.19.0\Server\config.json
+21 error addLocal Could not install c:\Raja\04-Code\AureliaApps\SplitDemo\skeleton-navigation-0.19.0\Server\config.json
+22 silly fetchPackageMetaData Error: ENOENT: no such file or directory, open 'C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508\package.json'
+22 silly fetchPackageMetaData     at Error (native)
+22 silly fetchPackageMetaData  error for config.json { [Error: ENOENT: no such file or directory, open 'C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508\package.json']
+22 silly fetchPackageMetaData   errno: -4058,
+22 silly fetchPackageMetaData   code: 'ENOENT',
+22 silly fetchPackageMetaData   syscall: 'open',
+22 silly fetchPackageMetaData   path: 'C:\\Users\\rxm8076\\AppData\\Local\\Temp\\1\\npm-9448-d3c09f06\\unpack-40e69a15c83a480fa85620e527e68508\\package.json' }
+23 silly rollbackFailedOptional Starting
+24 silly rollbackFailedOptional Finishing
+25 silly runTopLevelLifecycles Starting
+26 silly runTopLevelLifecycles Finishing
+27 silly install printInstalled
+28 verbose stack Error: ENOENT: no such file or directory, open 'C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508\package.json'
+28 verbose stack     at Error (native)
+29 verbose cwd c:\Raja\04-Code\AureliaApps\SplitDemo\skeleton-navigation-0.19.0\Server
+30 error Windows_NT 6.1.7601
+31 error argv "C:\\Program Files\\nodejs\\node.exe" "C:\\Users\\rxm8076\\AppData\\Roaming\\npm\\node_modules\\npm\\bin\\npm-cli.js" "install" "config.json"
+32 error node v4.2.1
+33 error npm  v3.3.8
+34 error path C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508\package.json
+35 error code ENOENT
+36 error errno -4058
+37 error syscall open
+38 error enoent ENOENT: no such file or directory, open 'C:\Users\rxm8076\AppData\Local\Temp\1\npm-9448-d3c09f06\unpack-40e69a15c83a480fa85620e527e68508\package.json'
+38 error enoent This is most likely not a problem with npm itself
+38 error enoent and is related to npm not being able to find a file.
+39 verbose exit [ -4058, true ]
