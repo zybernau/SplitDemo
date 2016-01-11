@@ -4,15 +4,18 @@
 		<form role="form" submit.delegate="submitEntry()">
 			<div class="form-group">
 				<label for="group"> Group: </label>
-				<input type="text" value.bind="resultText" class="form-control" id="grp" placeholder="group name"
+                <select value.bind="groups.group">
+                <option repeat.for="group of $parent.groups" model.bind="group">${group.title}</option>
+                </select>
 			</div>
 			<div class="form-group">
 				<label for="cost"> Amount: </label>
 				<input type="text" value.bind="cost" class="form-control" id="amt" placeholder="$ Money"
 			</div>
-			
-			<button type="submit" class="btn btn-default"> Submit </button>
-			
+			<a class="btn" href="https://secure.splitwise.com/authorize?oauth_token=${resKey.oauth_token}">
+            <span class="btn"> Authorize </span>
+             </a>
+      <button type="submit" class="btn btn-default"> Submit </button>
 		</form>
 	</section>
 </template>

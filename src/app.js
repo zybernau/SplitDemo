@@ -14,15 +14,13 @@ export class App {
   }
   
   configureRouter(config, router) {
-    config.title = 'Aurelia';
+    config.title = 'Split EASE';
     config.map([
-      { route: ['', 'welcome'], name: 'welcome',      moduleId: 'welcome',      nav: true, title: 'Welcome' },
-      { route: ['+', 'NewEntry'],    name: 'NewEntry',          moduleId: 'NewEntry',     nav: true, title:  "new entry" },
-      { route: ['-', 'Report'],    name: 'Report',          moduleId: 'Report',     nav: true, title:  "Report"}
-      /*,
-      { route: 'users',         name: 'users',        moduleId: 'users',        nav: true, title: 'Github Users' },
-      { route: 'child-router',  name: 'child-router', moduleId: 'child-router', nav: true, title: 'Child Router' }*/
+      { route: [''],    name: 'NewEntry',          moduleId: 'NewEntry',     nav: true, title:  "new entry" },
+      { route: ['-', 'Report'],    name: 'Report',          moduleId: 'Report',     nav: true, title:  "Report"},
+      { route: ['returnPage', 'rp'], moduleId: "NewEntry",  name: 'redirectNew',nav: true }
     ]);
+    config.options.pushState = true;
 
     this.router = router;
   }

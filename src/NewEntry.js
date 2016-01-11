@@ -1,76 +1,113 @@
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-http-client';
 import $ from 'jquery';
+import {Router} from 'aurelia-router';
 //import 'fetch';
 
-@inject(HttpClient)
+@inject(HttpClient, Router)
 export class NewEntry {
+    
+
+
 	heading = "New Entry";
 	cost=0;
-	
-	//BaseURL = 'http://jsonplaceholder.typicode.com';
-	//BaseURL = 'https://secure.splitwise.com/api/v3.0/test?oauth_callback=oob&oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt&oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg&oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp='+Date.now().toString()+'&oauth_version=1.0';
-	//BaseURL = 'https://secure.splitwise.com/api/v3.0/get_request_token?oauth_callback=oob&oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt&oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg&oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D&oauth_signature_method=HMAC-SHA1&oauth_timestamp='+Date.now().toString()+'&oauth_version=1.0';
-	
-	BaseURL = "http://localhost:3000/sample"
-	//timeStamp = Date.now().toString();
-	//BaseURL = 'http://term.ie/oauth/example/request_token.php?oauth_version=1.0&oauth_nonce=2c08b15e169dd79f1b58b111895710ef&oauth_timestamp='+Date.now().toString()+'&oauth_consumer_key=key&oauth_signature_method=HMAC-SHA1&oauth_signature=/R3UO7ZeIyP4C47gVfpxU0p7EUY=';
-	//Working ->
-	//BaseURL = 'http://api.flickr.com/services/feeds/photos_public.gne?tags=mountain&tagmode=any&format=json';
+	BaseURL = "http://localhost:3000/";
+	getaccessURL = "http://localhost:3000/accesstoken";
 	resKey = {};
+    oauth_token =undefined;
+    oauth_verifier = undefined;
+    payment = false;
+    amount = 0;
+    groupId = "";
+    groups = [];
+    group = {};
 	resultText = 'Yet to get the result';
-	constructor(http) {
-		console.log(Date.now().toString());
+    //key_res = {};
+	constructor(http, router) {
+		console.log("in cons" + Date.now().toString());
+        this.router = router;
 		this.http = http
 		.configure(x => {
 			x.withBaseUrl(this.BaseURL);
-			//x.withInterceptor(new ResponseInterceptor());
-			//x.withHeader('Content-Type', 'application/json');
-			//x.withHeader('DataType' , 'jsonp');
-			//x.withHeader('Authorization', 'bearer oauth_callback=oob; oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt; oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg; oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D; oauth_signature_method=HMAC-SHA1; oauth_timestamp=1324583039; oauth_version=1.0;')
-			
-			//x.withHeader('Method', 'post');
-		})
-		// http.configure(config => {
-		// 	config
-		// 		.useStandardConfiguration()
-		// 		.withBaseUrl('https://secure.splitwise.com/api/v3.0/')
-		// 		.withHeader('Authorization', 'oauth_callback=“oob”; oauth_consumer_key=“7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt”;oauth_nonce=“mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg”;oauth_signature=“NiFRzuOnBluHzjvepGGdpCyOnhc%3D”;oauth_signature_method=“HMAC-SHA1”oauth_timestamp=“1324583039”;oauth_version=“1.0” ');
-		// });
-		
-		/*this.client1.defaultRequestHeaders.add('Authorization', 'oauth_callback=oob; oauth_consumer_key=7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt; oauth_nonce=mN9HrBRniRcEF1EnY4X9JSZJ26MclAqjr9tMIlMQmg; oauth_signature=NiFRzuOnBluHzjvepGGdpCyOnhc%3D; oauth_signature_method=HMAC-SHA1; oauth_timestamp=1324583039; oauth_version=1.0;');*/
-		//this.http = http;
+
+		});
+        
+
 	}
 	
 	success(oauth_token, oauth_secret) {
 		console.log("Success, go home.");
 	}
 	
-	activate() {
+	activate(params,qus,routeConfig) {
 		// return this.http.post('get_request_token')
 		// .then(success);
+        this.oauth_token = routeConfig.queryParams.oauth_token;
+        this.oauth_verifier = routeConfig.queryParams.oauth_verifier;
+        console.log("HOOOOOREEEY... token: " + routeConfig.queryParams.oauth_token + " verif: " + routeConfig.queryParams.oauth_verifier);
+        if(this.oauth_token && this.oauth_verifier)
+        {
+            // call get access method.
+            this.getAccess();
+            // get the groups. currency. etc
+            this.getGroupInfo();
+            // once authorized, hide authorize button.
+        }
+        else if(!this.oauth_token)
+        {
+            this.initSplitwise();
+        }
 	}
-
-	submitEntry() {
-		return this.http.jsonp('', 'callback').then(
+	
+    getGroupInfo() {
+        // get the group info. and bind in the html.
+        
+    }
+	getAccess() {
+		console.log("Key Res: " + this.key_res);
+		
+		var urlGetAccess = "accesstoken" + "?oauth_token=" + this.oauth_token + "&oauth_verifier=" + this.oauth_verifier;
+		return this.http.jsonp(urlGetAccess, 'callback').then (
+			response => {
+				console.log('got the other response, hurrak... ' + response.response.body);
+			}
+			, err => {
+				console.log('got the error' + err);
+			}
+		);
+	}
+	getAuthed() {
+        console.log('app is ' + this.router);
+        
+       this.router.navigate('welcome', { oauth_token:this.key_res.oauth_token}, {replace: true}); 
+    }
+	initSplitwise() {
+		return this.http.jsonp('init', 'callback').then(
 		response => {
 			//this.resultText = response.response.request_url;
-			console.log('Got the response, hurrah...' + response.response.test );
+			console.log('Got the response, hurrah...' + response.response.body );
+			this.oauth_token = response.response.oauth_token;
+            this.resKey = response.response;
 		}
 		, err => {
 			console.log("error occured while sending dodebentain tontabentain: " + err);
 		});
-		
-		/*$.ajax({
-  type: "GET",
-  url: 'http://localhost:3000/sample',
-  success: this.success,
-  dataType: 'jsonp'
-});*/
-		
-		
-		// .then(success);
-	}
+     }
+    submitEntry() {
+        var urlEntry = "";
+        urlEntry = "submitEntry" + "?ver=" + this.oauth_verifier + "&payment=" + this.payment.toString() + "&amount=" + this.amount + "&group=" + this.groupId
+        return this.http.jsonp(urlEntry, 'callback').then(
+		response => {
+			//this.resultText = response.response.request_url;
+			console.log('Got the response, hurrah...' + response.response.body );
+			this.key_res = response.response;
+            this.resKey = response.response;
+		}
+		, err => {
+			console.log("error occured while sending dodebentain tontabentain: " + err);
+		});
+    }
+    
 	failure(errors) {
 		console.log("don't go home, " + errors.toString());
 	}

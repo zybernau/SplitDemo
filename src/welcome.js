@@ -19,7 +19,13 @@ export class Welcome {
     this.previousValue = this.fullName;
     alert(`Welcome, ${this.fullName}!`);
   }
-
+    activate(params, qus, routeConfig) {
+		// return this.http.post('get_request_token')
+		// .then(success);
+        
+        console.log("HOOOOOREEEY..." + qus);
+        console.log("HOOOOOREEEY..." + qus.oauth_token);
+	}
   canDeactivate() {
     if (this.fullName !== this.previousValue) {
       return confirm('Are you sure you want to leave?');

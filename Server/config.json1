@@ -1,0 +1,9 @@
+{
+    "splitwise": {
+        "consumer_key" : "7Qi2ZaDFkVcQkh5A4hoSo0oqfE6Lnuw2IGxCSYGt",
+        "consumer_secret" : "FhnZWUbVtn2b4G9XgD3MuptCke14vn0wD1zfqGqG",
+         "req_token_uri" : "https://secure.splitwise.com/api/v3.0/get_request_token",
+        "access_token_uri" : "https://secure.splitwise.com/api/v3.0/get_access_token",
+         "callback_def" : "http://localhost:9000/#/returnPage/"
+    }
+}
