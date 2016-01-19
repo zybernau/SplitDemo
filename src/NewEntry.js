@@ -11,8 +11,9 @@ export class NewEntry {
 
 	heading = "New Entry";
 	cost=0;
-	BaseURL = "http://localhost:3000/";
-	getaccessURL = "http://localhost:3000/accesstoken";
+	BaseURL = "http://www.zybernau.in:3000/";
+	getaccessURL = "http://www.zybernau.in:3000/accesstoken";
+    consumer_key = "57juq9zI0Epc1FPk7w64F91UUewHyFQKjxdnVaD4";
 	resKey = {};
     oauth_token =undefined;
     oauth_verifier = undefined;
@@ -85,9 +86,10 @@ export class NewEntry {
 		return this.http.jsonp('init', 'callback').then(
 		response => {
 			//this.resultText = response.response.request_url;
-			console.log('Got the response, hurrah...' + response.response.body );
+			console.log('Got the response, hurrah...' + response.response.oauth_token );
 			this.oauth_token = response.response.oauth_token;
             this.resKey = response.response;
+            document.cookie = 'oauth_secret_token =' + response.response.oauth_secret_token + ';domain=zybernau.in:3000';
 		}
 		, err => {
 			console.log("error occured while sending dodebentain tontabentain: " + err);
@@ -102,6 +104,7 @@ export class NewEntry {
 			console.log('Got the response, hurrah...' + response.response.body );
 			this.key_res = response.response;
             this.resKey = response.response;
+            
 		}
 		, err => {
 			console.log("error occured while sending dodebentain tontabentain: " + err);

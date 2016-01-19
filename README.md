@@ -48,6 +48,14 @@ To run the app, follow these steps.
 ```html
 <script src="jspm_packages/github/webcomponents/webcomponentsjs@0.5.2/HTMLImports.js"></script>
 ```
+## Running The Server
+
+1. Browse to the server folder, execute the following command for running the server.
+
+  ```shell
+  cd server
+  node app.js
+  ```
 
 ## Running The App under Electron
 
